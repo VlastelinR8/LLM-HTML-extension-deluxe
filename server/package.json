@@ -1,0 +1,17 @@
+{
+  "name": "lll_extension_server",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Vlastelin",
+  "license": "MIT",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "express": "^5.1.0",
+    "node-llama-cpp": "^3.14.2"
+  },
+  "type": "module"
+}
