@@ -10,7 +10,13 @@ const model = await llama.loadModel({
     modelPath: "models/Qwen3-1.7B-Q8_0.gguf"
 });
 
-
+function removeWords(str, fragments) {
+    const escaped = fragments.map(f =>
+        f.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")
+    );
+    const regex = new RegExp(escaped.join("|"), "g");
+    return str.replace(regex, "");
+}
 
 
 // HTTP API, к которому будет обращаться ваше расширение
@@ -22,9 +28,12 @@ app.post("/api/llm", async (req, res) => {
     const prompt = req.body.prompt ?? "";
 
     try {
-        const answer = await session.prompt(prompt);
+        var answer = await session.prompt(prompt);
+        answer = removeWords(answer,["</think>"]);
         res.send( answer );
+        console.log(prompt,answer);
     } catch (err) {
+     console.log(answer, err);
         res.status(500).json({ error: err.toString() });
     }
 });
